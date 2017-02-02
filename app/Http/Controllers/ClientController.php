@@ -23,9 +23,11 @@ class ClientController extends Controller
 	
 	public function destroy($id){
 		Client::find($id)->delete();
+		return "Deletado";
 	}
 	
-	public function store(Request $request){
-		return Client::create($request->all());
+	public function update($id, Request $request){
+		return Client::findorfail($id)->update($request->all());
 	}
 }
+	
