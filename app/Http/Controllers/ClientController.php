@@ -27,7 +27,15 @@ class ClientController extends Controller
 	}
 	
 	public function update($id, Request $request){
-		return Client::findorfail($id)->update($request->all());
+		$client = Client::findorfail($id);
+		
+		$client->update($request->all());
+		
+		if($client){		
+			return "Atualizado com sucesso <br>" . $client;
+		} else {
+			return "Erro ao atualizar";
+		}
 	}
 }
 	
