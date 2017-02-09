@@ -1,11 +1,12 @@
 <?php
 
-namespace CodeProject\Srvices;
+namespace CodeProject\Services;
 
 use CodeProject\Repositories\ClientRepository;
 use CodeProject\Validators\ClientValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Illuminate\Cache\Repository;
+use PhpParser\Node\Stmt\TryCatch;
 
 class ClientService{
 	/**
@@ -22,6 +23,7 @@ class ClientService{
 		$this->validators = $validators;
 	}
 	
+	//Cria um novo Client
 	public function create(array $data){
 		try {
 			$this->validators->with($data)->passesOrFail();
@@ -35,7 +37,48 @@ class ClientService{
 		}
 	}
 	
+	//Atualiza Client
 	public function update(array $data, $id){
-		return $this->repository->update($data, $id);
+		try {
+			$this->validators->with($data)->passesOrFail();
+			
+			$client = $this->repository->find($id);			
+			$client->update($data);
+			
+			return $client;
+		} catch(ValidatorException $e){
+			return [
+				'error' => true,
+				'message' => $e->getMessageBag()
+			];
+		}
+	}
+	
+	//Apaga Client selecionado
+	public function destroy($id){
+		try {
+			$this->repository->find($id)->delete();
+			return "Deleted successfully!";
+		} catch (Exception $e){
+			return  $e;
+		}
+	}
+	
+	//Retorna todos os resultados
+	public function index(){
+		try {
+			return $this->repository->all();
+		} catch (Exception $e) {
+			return  $e;
+		}
+	}
+	
+	//Retorna o Client selecionado
+	public function show($id){
+		try{
+			return $this->repository->find($id);
+		} catch (Exception $e){
+			return $e;
+		}
 	}
 }

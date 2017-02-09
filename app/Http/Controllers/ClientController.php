@@ -4,7 +4,7 @@ namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
 use CodeProject\Repositories\ClientRepository;
-use CodeProject\Srvices\ClientService;
+use CodeProject\Services\ClientService;
 use Illuminate\Auth\Access\Response;
 
 class ClientController extends Controller
@@ -37,7 +37,7 @@ class ClientController extends Controller
 	 * @return Response
 	 */
     public function index(){
-    	return $this->repository->all();
+    	return $this->service->index();
 	}
 	
     /**
@@ -55,7 +55,7 @@ class ClientController extends Controller
 	 * @return Response
 	 */
 	public function show($id){
-		return $this->repository->find($id);
+		return $this->service->show($id);
 	}
 	
 	/**
@@ -64,8 +64,7 @@ class ClientController extends Controller
 	 * @return Response
 	 */
 	public function destroy($id){
-		$this->repository->find($id)->delete();
-		return "Deletado";
+		$this->service->destroy($id);
 	}
 	
 	/**
@@ -74,16 +73,8 @@ class ClientController extends Controller
 	 * @param Request $request
 	 * @return Response
 	 */
-	public function update($id, Request $request){
-		$client = $this->repository->find($id);
-		
-		$client->update($request->all());
-		
-		if($client){		
-			return "Atualizado com sucesso <br>" . $client;
-		} else {
-			return "Erro ao atualizar";
-		}
+	public function update(Request $request, $id){
+		return $this->service->update($request->all(), $id);
 	}
 }
 	
