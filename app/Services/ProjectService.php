@@ -74,7 +74,12 @@ class ProjectService{
 	
 	//busca o registro selecionado
 	public function show($id){
-		return $this->repository->find($id);
+		try{
+			$project = $this->repository->find($id);
+			return $project . "<br/> Client of this project: <br/>" . $project->client;
+		} catch (Exception $e){
+			return $e;
+		}
 	}
 
 }

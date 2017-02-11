@@ -75,7 +75,8 @@ class ClientService{
 	//Retorna o Client selecionado
 	public function show($id){
 		try{
-			return $this->repository->find($id);
+			$client = $this->repository->find($id);
+			return $client . "<br/> Projet of this Client: <br/>" . $client->project;
 		} catch (Exception $e){
 			return $e;
 		}
