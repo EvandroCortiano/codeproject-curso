@@ -7,7 +7,7 @@ use CodeProject\Validators\ProjectValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Illuminate\Cache\Repository;
 
-class ClientService{
+class ProjectService{
 	/**
 	 * @var ClientRepository
 	 */
@@ -22,6 +22,16 @@ class ClientService{
 		$this->validators = $validators;
 	}
 	
+	//Retorna todos os resultados
+	public function index(){
+		try {
+			return $this->repository->all();
+		} catch (Exception $e) {
+			return  $e;
+		}
+	}
+	
+	//cria um novo registro
 	public function create(array $data){
 		try {
 			$this->validators->with($data)->passesOrFail();
@@ -35,7 +45,36 @@ class ClientService{
 		}
 	}
 	
+	//atualiza dados
 	public function update(array $data, $id){
-		return $this->repository->update($data, $id);
+		try {
+			$this->validators->with($data)->passesOrFail();
+			
+			$project = $this->repository->find($id);
+			$project->update($data);
+			
+			return $project;
+		} catch (ValidatorException $e){
+			return [
+					'error' => true,
+					'message' => $e->getMessageBag()
+			];
+		}
 	}
+	
+	//apagar os dados do banco
+	public function destroy($id){
+		try {
+			$this->repository->find($id)->delete();
+			return "Deletado com sucesso";
+		} catch (Exception $e) {
+			return  $e;
+		}
+	}
+	
+	//busca o registro selecionado
+	public function show($id){
+		return $this->repository->find($id);
+	}
+
 }

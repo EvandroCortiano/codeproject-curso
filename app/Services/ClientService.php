@@ -6,7 +6,6 @@ use CodeProject\Repositories\ClientRepository;
 use CodeProject\Validators\ClientValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Illuminate\Cache\Repository;
-use PhpParser\Node\Stmt\TryCatch;
 
 class ClientService{
 	/**

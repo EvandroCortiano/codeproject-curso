@@ -3,9 +3,9 @@
 namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Auth\Access\Response;
 use CodeProject\Repositories\ClientRepository;
 use CodeProject\Services\ClientService;
-use Illuminate\Auth\Access\Response;
 
 class ClientController extends Controller
 {
@@ -76,5 +76,6 @@ class ClientController extends Controller
 	public function update(Request $request, $id){
 		return $this->service->update($request->all(), $id);
 	}
+
 }
 	
