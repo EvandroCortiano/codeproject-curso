@@ -4,33 +4,31 @@ namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Auth\Access\Response;
-use CodeProject\Repositories\ProjectNoteRepository;
-use CodeProject\Services\ProjectNoteService;
-use CodeProject\Entities\ProjectNote;
+use CodeProject\Repositories\ProjectTaskRepository;
+use CodeProject\Services\ProjectTaskService;
 
-
-class ProjectNoteController extends Controller
+class ProjectTasksController extends Controller
 {
-    //inicia com o metodo privado e contrutor do Repository and Service para usar nesta classe
-    /**
-     * 
-     * @var ProjectRepository
-     */
+	//inicia com o metodo privado e contrutor do Repository and Service para usar nesta classe
+	/**
+	 *
+	 * @var ProjectTaskRepository
+	 */
 	private $repository;
 	
 	/**
-	 * 
-	 * @var ProjectService
+	 *
+	 * @var ProjectTaskService
 	 */
 	private $service;
 	
 	/**
 	 *
-	 * @param ProjectRepository $repository
-	 * @param ProjectService $service
+	 * @param ProjectNoteRepository $repository
+	 * @param ProjectNoteService $service
 	 */
 	//metodo construtor
-	public function __construct(ProjectNoteRepository $repository, ProjectNoteService $service){
+	public function __construct(ProjectTaskRepository $repository, ProjectTaskService $service){
 		$this->repository = $repository;
 		$this->service = $service;
 	}
@@ -44,16 +42,16 @@ class ProjectNoteController extends Controller
 	}
 	
 	/**
-	 * 
-     * @param Request  $request
-     * @return Respons
+	 *
+	 * @param Request  $request
+	 * @return Respons
 	 */
 	public function store(Request $request){
 		return $this->service->create($request->all());
 	}
 	
 	/**
-	 * 
+	 *
 	 * @param Request $request
 	 * @param unknown $id
 	 * @return Response
@@ -61,9 +59,9 @@ class ProjectNoteController extends Controller
 	public function update(Request $request, $id, $noteId){
 		return $this->service->update($request->all(), $id);
 	}
-
+	
 	/**
-	 * 
+	 *
 	 * @param unknown $id
 	 * @return string|Exception
 	 */
@@ -72,7 +70,7 @@ class ProjectNoteController extends Controller
 	}
 	
 	/**
-	 * 
+	 *
 	 * @param unknown $id
 	 * @return unknown
 	 */

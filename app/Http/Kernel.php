@@ -28,7 +28,8 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-      
+        		//oAuth2
+        	\LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
         ],
 
         'api' => [
@@ -50,5 +51,11 @@ class Kernel extends HttpKernel
         'guest' => \CodeProject\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     	'csrf' => \CodeProject\Http\Middleware\VerifyCsrfToken::class,
+    		
+    	//OAuth2	
+    	'oauth' => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
+    	'oauth-user' => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,
+    	'oauth-client' => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,
+    	'check-authorization-params' => \LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware::class,
     ];
 }
