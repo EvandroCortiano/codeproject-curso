@@ -6,14 +6,15 @@ use Illuminate\Cache\Repository;
 use Prettus\Validator\Exceptions\ValidatorException;
 use CodeProject\Validators\ProjectTaskValidator;
 use CodeProject\Repositories\ProjectTaskRepository;
+use CodeProject\Validators\ProjectNoteValidator;
 
 class ProjectTaskService{
 	/**
-	 * @var ClientRepository
+	 * @var ProjectTaskRepository
 	 */
 	protected $repository;
 	/**
-	 * @var ClientValidator
+	 * @var ProjectTaskValidator
 	 */
 	protected $validator;
 	
@@ -50,10 +51,10 @@ class ProjectTaskService{
 		try {
 			$this->validators->with($data)->passesOrFail();
 			
-			$project = $this->repository->find($id);
-			$project->update($data);
+			$task = $this->repository->find($id);
+			$task->update($data);
 			
-			return $project;
+			return $task;
 		} catch (ValidatorException $e){
 			return [
 					'error' => true,
@@ -75,8 +76,8 @@ class ProjectTaskService{
 	//busca o registro selecionado
 	public function show($id){
 		try{
-			$project = $this->repository->find($id);
-			return $project . "<br/> Client of this project: <br/>" . $project->client;
+			$task = $this->repository->find($id);
+			return $task . "<br/> Task of project: <br/>" . $task->project;
 		} catch (Exception $e){
 			return $e;
 		}
