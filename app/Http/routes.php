@@ -61,11 +61,11 @@ Route::group(['middleware' => 'oauth'], function(){
 });
 
 	//rotas project note
-	Route::get('project/{id}/task', 'ProjectTaskController@index');
-	Route::post('project/{id}/task', 'ProjectTaskController@store');
-	Route::get('project/{id}/task/{taskId}', 'ProjectTaskController@show');
-	Route::put('project/{id}/task/{taskId}', 'ProjectTaskController@update');
-	Route::delete('project/{id}/task/{taskId}', 'ProjectTaskController@delete');
+	Route::get('project/{id}/task', 'ProjectTasksController@index');
+	Route::post('project/{id}/task', 'ProjectTasksController@store');
+	Route::get('project/{id}/task/{taskId}', 'ProjectTasksController@show');
+	Route::put('project/{id}/task/{taskId}', 'ProjectTasksController@update');
+	Route::delete('project/{id}/task/{taskId}', 'ProjectTasksController@delete');
 
 
 
