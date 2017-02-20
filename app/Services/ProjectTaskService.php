@@ -47,11 +47,11 @@ class ProjectTaskService{
 	}
 	
 	//atualiza dados
-	public function update(array $data, $id){
+	public function update(array $data, $id, $taskId){
 		try {
 			$this->validators->with($data)->passesOrFail();
 			
-			$task = $this->repository->find($id);
+			$task = $this->repository->find($taskId);
 			$task->update($data);
 			
 			return $task;
@@ -64,9 +64,9 @@ class ProjectTaskService{
 	}
 	
 	//apagar os dados do banco
-	public function destroy($id){
+	public function destroy($id, $taskId){
 		try {
-			$this->repository->find($id)->delete();
+			$this->repository->find($taskId)->delete();
 			return "Deletado com sucesso";
 		} catch (Exception $e) {
 			return  $e;

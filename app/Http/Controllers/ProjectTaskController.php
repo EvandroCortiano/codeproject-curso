@@ -58,7 +58,7 @@ class ProjectTaskController extends Controller
 	 * @return Response
 	 */
 	public function update(Request $request, $id, $taskId){
-		return $this->service->update($request->all(), $id);
+		return $this->service->update($request->all(), $id, $taskId);
 	}
 	
 	/**
@@ -66,8 +66,8 @@ class ProjectTaskController extends Controller
 	 * @param unknown $id
 	 * @return string|Exception
 	 */
-	public function destroy($id){
-		return $this->service->destroy($id);
+	public function destroy($id, $taskId){
+		return $this->service->destroy($id,$taskId);
 	}
 	
 	/**
