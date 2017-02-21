@@ -78,4 +78,29 @@ class ProjectController extends Controller
 	public function show($id){
 		return $this->service->show($id);
 	}
+	
+	/**
+	 * 
+	 * @param unknown $project_id
+	 * @param unknown $user_id
+	 * @return unknown
+	 */
+	
+	public function storeMember($project_id, $user_id){
+		return $this->service->addMember($project_id, $user_id);
+	}
+	
+	/**
+	 * 
+	 * @param unknown $project_id
+	 * @param unknown $user_id
+	 * @return unknown
+	 */
+	public function destroyMember($project_id, $user_id){
+		return $this->service->removeMember($project_id, $user_id);
+	}
+	
+	public function members($project_id){
+		return $this->service->isMember($project_id);
+	}
 }

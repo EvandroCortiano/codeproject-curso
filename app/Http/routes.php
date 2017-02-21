@@ -60,12 +60,15 @@ Route::group(['middleware' => 'oauth'], function(){
 	*/
 });
 
-	//rotas project note
+	//rotas project tasks
 	Route::get('project/{id}/task', 'ProjectTaskController@index');
 	Route::post('project/{id}/task', 'ProjectTaskController@store');
 	Route::get('project/{id}/task/{taskId}', 'ProjectTaskController@show');
 	Route::put('project/{id}/task/{taskId}', 'ProjectTaskController@update');
 	Route::delete('project/{id}/task/{taskId}', 'ProjectTaskController@destroy');
-
-
+	
+	//rotas Projet Members
+	Route::get('project/{project_id}/member', 'ProjectController@members');
+	Route::post('project/{project_id}/member/{user_id}', 'ProjectController@storeMember');
+	Route::delete('project/{project_id}/member/{user_id}', 'ProjectController@destroyMember');
 
