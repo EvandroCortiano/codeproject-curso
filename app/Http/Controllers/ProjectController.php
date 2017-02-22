@@ -76,6 +76,12 @@ class ProjectController extends Controller
 	 * @return unknown
 	 */
 	public function show($id){
+		//Pegar o id do user
+		$userId = \Authorizer::getResourceOwnerId();
+		
+		if($this->repository->isOwner($id, $userId) == false){
+			return ['success' => false];
+		}
 		return $this->service->show($id);
 	}
 	

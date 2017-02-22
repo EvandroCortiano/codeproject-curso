@@ -33,4 +33,12 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+    
+    public function isOwer($projectId, $userId){
+    	if(count($this->findWhere(['id' => $projectId, 'ower_id' => $userId]))){
+    		return true;
+    	}
+    		return false;
+  	
+    }
 }
