@@ -67,7 +67,11 @@ class ProjectTasksController extends Controller
 	 * @return string|Exception
 	 */
 	public function destroy($id, $taskId){
+<<<<<<< HEAD:app/Http/Controllers/ProjectTasksController.php
 		return $this->service->destroy($id, $taskId);
+=======
+		return $this->service->destroy($id,$taskId);
+>>>>>>> 912700d3fd518e603df5d9e459f1fa5f0933bd01:app/Http/Controllers/ProjectTaskController.php
 	}
 	
 	/**

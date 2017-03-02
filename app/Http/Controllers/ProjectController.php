@@ -76,6 +76,37 @@ class ProjectController extends Controller
 	 * @return unknown
 	 */
 	public function show($id){
+		//Pegar o id do user
+		//$userId = \Authorizer::getResourceOwnerId();
+		
+		//if($this->repository->isOwner($id, $userId) == false){
+		//	return ['success' => false];
+		//}
 		return $this->service->show($id);
+	}
+	
+	/**
+	 * 
+	 * @param unknown $project_id
+	 * @param unknown $user_id
+	 * @return unknown
+	 */
+	
+	public function storeMember($project_id, $user_id){
+		return $this->service->addMember($project_id, $user_id);
+	}
+	
+	/**
+	 * 
+	 * @param unknown $project_id
+	 * @param unknown $user_id
+	 * @return unknown
+	 */
+	public function destroyMember($project_id, $user_id){
+		return $this->service->removeMember($project_id, $user_id);
+	}
+	
+	public function members($project_id){
+		return $this->service->isMember($project_id);
 	}
 }

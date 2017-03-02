@@ -35,7 +35,7 @@ class ProjectService{
 	public function create(array $data){
 		try {
 			$this->validators->with($data)->passesOrFail();
-			//poderia enviar um email, disparar notificação, postar um tweet
+			//poderia enviar um email, disparar notificaï¿½ï¿½o, postar um tweet
 			return $this->repository->create($data);
 		} catch (ValidatorException $e){
 			return [
@@ -80,6 +80,48 @@ class ProjectService{
 		} catch (Exception $e){
 			return $e;
 		}
+	}
+	
+	//funcoes para a tabela project_members
+	//Adicionar um novo member a um projecto
+	public function addMember($project_id, $user_id){
+		
+		$project = $this->repository->find($project_id);
+		
+		if(!$this->member($project_id, $user_id)){
+			$project->users()->attach($user_id);
+		}
+		
+		return $project->users()->get();
+
+	}
+	
+	//remove um membro de um projeto
+	public function removeMember($project_id, $user_id){
+		
+		$project = $this->repository->find($project_id);
+		
+		$project->users()->detach($user_id);
+		
+		return $project->users()->get();
+	}
+	
+	//verifica se um usuario Ã© membro de um determinado projeto
+	public function member($project_id, $user_id){
+		
+		$project = $this->repository->find($project_id)->users()->find(['user_id' => $user_id]);
+		
+		if(count($project)){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	//verifica os membros de um projeto
+	public function isMember($project_id){
+		$project = $this->repository->find($project_id);
+		return $project->users;
 	}
 
 }
