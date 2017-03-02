@@ -38,8 +38,11 @@ Route::group(['middleware' => 'oauth'], function(){
 	* Route::put('client/{id}', 'ClientController@update');
 	*/
 	
-	//rotas project
-	Route::resource('project', 'ProjectController', ['except' => ['create', 'edit']]);
+	Route::group(['middleware' => 'CheckProjectOwner'], function(){
+		//rotas project
+		Route::resource('project', 'ProjectController', ['except' => ['create', 'edit']]);
+	});
+	
 	
 	//Rotas para project - foi agrupada para porject e project notes pois tem o mesmo prefixo
 	Route::group(['prefix' => 'project'], function(){
