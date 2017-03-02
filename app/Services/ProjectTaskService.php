@@ -9,11 +9,11 @@ use CodeProject\Repositories\ProjectTaskRepository;
 
 class ProjectTaskService{
 	/**
-	 * @var ClientRepository
+	 * @var ProjectTaskRepository
 	 */
 	protected $repository;
 	/**
-	 * @var ClientValidator
+	 * @var ProjectTaskValidator
 	 */
 	protected $validator;
 	
@@ -35,8 +35,8 @@ class ProjectTaskService{
 	public function create(array $data){
 		try {
 			$this->validators->with($data)->passesOrFail();
-			//poderia enviar um email, disparar notifica��o, postar um tweet
 			return $this->repository->create($data);
+			
 		} catch (ValidatorException $e){
 			return [
 				'error' => true,
@@ -46,14 +46,17 @@ class ProjectTaskService{
 	}
 	
 	//atualiza dados
-	public function update(array $data, $id){
+	public function update(array $data, $id, $taskId){
 		try {
 			$this->validators->with($data)->passesOrFail();
 			
-			$project = $this->repository->find($id);
-			$project->update($data);
+			$task = $this->repository->find($taskId);
 			
-			return $project;
+			return $task;
+			
+			$task->update($data);
+			
+			return $task;
 		} catch (ValidatorException $e){
 			return [
 					'error' => true,
@@ -63,9 +66,9 @@ class ProjectTaskService{
 	}
 	
 	//apagar os dados do banco
-	public function destroy($id){
+	public function destroy($id, $taskId){
 		try {
-			$this->repository->find($id)->delete();
+			$this->repository->find($taskId)->delete();
 			return "Deletado com sucesso";
 		} catch (Exception $e) {
 			return  $e;
@@ -73,10 +76,10 @@ class ProjectTaskService{
 	}
 	
 	//busca o registro selecionado
-	public function show($id){
+	public function show($id, $taskId){
 		try{
-			$project = $this->repository->find($id);
-			return $project . "<br/> Client of this project: <br/>" . $project->client;
+			$task = $this->repository->find($taskId);
+			return $task . "<br/> Task of project: <br/>" . $task->project;
 		} catch (Exception $e){
 			return $e;
 		}

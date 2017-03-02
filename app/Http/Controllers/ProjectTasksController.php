@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Access\Response;
 use CodeProject\Repositories\ProjectTaskRepository;
 use CodeProject\Services\ProjectTaskService;
+use CodeProject\Entities\ProjectTask;
 
 class ProjectTasksController extends Controller
 {
@@ -24,8 +25,8 @@ class ProjectTasksController extends Controller
 	
 	/**
 	 *
-	 * @param ProjectNoteRepository $repository
-	 * @param ProjectNoteService $service
+	 * @param ProjectTaskRepository $repository
+	 * @param ProjectTaskService $service
 	 */
 	//metodo construtor
 	public function __construct(ProjectTaskRepository $repository, ProjectTaskService $service){
@@ -56,8 +57,8 @@ class ProjectTasksController extends Controller
 	 * @param unknown $id
 	 * @return Response
 	 */
-	public function update(Request $request, $id, $noteId){
-		return $this->service->update($request->all(), $id);
+	public function update(Request $request, $id, $taskId){
+		return $this->service->update($request->all(), $id, $taskId);
 	}
 	
 	/**
@@ -65,8 +66,8 @@ class ProjectTasksController extends Controller
 	 * @param unknown $id
 	 * @return string|Exception
 	 */
-	public function destroy($id){
-		return $this->service->destroy($id);
+	public function destroy($id, $taskId){
+		return $this->service->destroy($id, $taskId);
 	}
 	
 	/**
@@ -74,7 +75,7 @@ class ProjectTasksController extends Controller
 	 * @param unknown $id
 	 * @return unknown
 	 */
-	public function show($id, $noteId){
-		return $this->repository->findWhere(['project_id' => $id, 'id' => $noteId]);
+	public function show($id, $taskId){
+		return $this->service->show($id, $taskId);
 	}
 }

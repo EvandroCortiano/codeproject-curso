@@ -9,11 +9,11 @@ use Illuminate\Cache\Repository;
 
 class ProjectNoteService{
 	/**
-	 * @var ClientRepository
+	 * @var ProjectNoteRepository
 	 */
 	protected $repository;
 	/**
-	 * @var ClientValidator
+	 * @var ProjectNoteValidator
 	 */
 	protected $validator;
 	
