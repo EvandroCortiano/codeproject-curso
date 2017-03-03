@@ -38,10 +38,10 @@ Route::group(['middleware' => 'oauth'], function(){
 	* Route::put('client/{id}', 'ClientController@update');
 	*/
 	
-	Route::group(['middleware' => 'CheckProjectOwner'], function(){
+	//Route::group(['middleware' => 'CheckProjectOwner'], function(){
 		//rotas project
 		Route::resource('project', 'ProjectController', ['except' => ['create', 'edit']]);
-	});
+	//});
 	
 	
 	//Rotas para project - foi agrupada para porject e project notes pois tem o mesmo prefixo
@@ -64,26 +64,16 @@ Route::group(['middleware' => 'oauth'], function(){
 	*/
 });
 
-<<<<<<< HEAD
-	//rotas project note
+	//rotas project tasks
 	Route::get('project/{id}/task', 'ProjectTasksController@index');
 	Route::post('project/{id}/task', 'ProjectTasksController@store');
 	Route::get('project/{id}/task/{taskId}', 'ProjectTasksController@show');
 	Route::put('project/{id}/task/{taskId}', 'ProjectTasksController@update');
 	Route::delete('project/{id}/task/{taskId}', 'ProjectTasksController@destroy');
-
-
-=======
-	//rotas project tasks
-	Route::get('project/{id}/task', 'ProjectTaskController@index');
-	Route::post('project/{id}/task', 'ProjectTaskController@store');
-	Route::get('project/{id}/task/{taskId}', 'ProjectTaskController@show');
-	Route::put('project/{id}/task/{taskId}', 'ProjectTaskController@update');
-	Route::delete('project/{id}/task/{taskId}', 'ProjectTaskController@destroy');
 	
 	//rotas Projet Members
 	Route::get('project/{project_id}/member', 'ProjectController@members');
 	Route::post('project/{project_id}/member/{user_id}', 'ProjectController@storeMember');
 	Route::delete('project/{project_id}/member/{user_id}', 'ProjectController@destroyMember');
->>>>>>> 912700d3fd518e603df5d9e459f1fa5f0933bd01
+
 

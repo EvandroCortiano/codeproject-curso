@@ -51,12 +51,7 @@ class ProjectTaskService{
 			$this->validators->with($data)->passesOrFail();
 			
 			$task = $this->repository->find($taskId);
-<<<<<<< HEAD
-			
-			return $task;
-			
-=======
->>>>>>> 912700d3fd518e603df5d9e459f1fa5f0933bd01
+
 			$task->update($data);
 			
 			return $task;
