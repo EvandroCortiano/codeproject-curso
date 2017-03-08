@@ -76,7 +76,7 @@ class ProjectService{
 	public function show($id){
 		try{
 			$project = $this->repository->find($id);
-			return $project . "<br/> Client of this project: <br/>" . $project->client;
+			return $project;
 		} catch (Exception $e){
 			return $e;
 		}

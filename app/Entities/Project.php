@@ -36,7 +36,7 @@ class Project extends Model implements Transformable
 	}
 
 	//relacionamento * - * com a tabela Users
-	public function users(){
+	public function members(){
 		return $this->belongsToMany(User::class, 'project_members', 'project_id', 'user_id');
 	}
 
