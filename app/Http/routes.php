@@ -76,4 +76,6 @@ Route::group(['middleware' => 'oauth'], function(){
 	Route::post('project/{project_id}/member/{user_id}', 'ProjectController@storeMember');
 	Route::delete('project/{project_id}/member/{user_id}', 'ProjectController@destroyMember');
 
+	//rota upload
+	Route::post('project/{id}/file','ProjectFileController@store');
 
