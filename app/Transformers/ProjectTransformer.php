@@ -8,7 +8,7 @@ use CodeProject\Transformers\ProjectMemberTransformer;
 
 class ProjectTransformer extends TransformerAbstract{
 	
-	protected $defaultIncludes = ['members'];
+	protected $defaultIncludes = ['members', 'notes', 'tasks', 'files', 'clients'];
 	
 	public function transform(Project $project){
 		return [
@@ -25,5 +25,23 @@ class ProjectTransformer extends TransformerAbstract{
 	
 	public function includeMembers(Project $project){
 		return $this->collection($project->members, new ProjectMemberTransformer());
+	}
+	
+	public function includeNotes(Project $project){
+		return $this->collection($project->notes, new ProjectNoteTransformer());
+	}
+	
+	public function includeTasks(Project $project){
+		return $this->collection($project->tasks, new ProjectTaskTransformer());
+	}
+	
+	public function includeFiles(Project $project)
+	{
+		return $this->collection($project->files, new ProjectFileTransformer());
+	}
+	
+	public function includeClients(Project $project)
+	{
+		return $this->collection($project->taks, new ClientTransformer());
 	}
 }

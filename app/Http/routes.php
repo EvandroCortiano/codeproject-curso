@@ -39,9 +39,10 @@ Route::group(['middleware' => 'oauth'], function(){
 	*/
 	
 	//Route::group(['middleware' => 'CheckProjectOwner'], function(){
-		//rotas project
-		Route::resource('project', 'ProjectController', ['except' => ['create', 'edit']]);
 	//});
+	//rotas project
+	Route::resource('project', 'ProjectController', ['except' => ['create', 'edit']]);
+	
 	
 	
 	//Rotas para project - foi agrupada para porject e project notes pois tem o mesmo prefixo
@@ -62,8 +63,7 @@ Route::group(['middleware' => 'oauth'], function(){
 	* Route::delete('project/{id}', 'ProjectController@destroy');
 	* Route::get('project/{id}', 'ProjectController@show');
 	*/
-});
-
+	
 	//rotas project tasks
 	Route::get('project/{id}/task', 'ProjectTasksController@index');
 	Route::post('project/{id}/task', 'ProjectTasksController@store');
@@ -75,7 +75,9 @@ Route::group(['middleware' => 'oauth'], function(){
 	Route::get('project/{project_id}/member', 'ProjectController@members');
 	Route::post('project/{project_id}/member/{user_id}', 'ProjectController@storeMember');
 	Route::delete('project/{project_id}/member/{user_id}', 'ProjectController@destroyMember');
-
+	
 	//rota upload
-	Route::post('project/{id}/file','ProjectFileController@store');
+	Route::post('project/{id}/file','ProjectFileController@store');		
+});
+
 

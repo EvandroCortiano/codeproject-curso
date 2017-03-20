@@ -39,6 +39,11 @@ class ProjectController extends Controller
 	 * @return Response
 	 */
 	public function index(){
+		
+		if ($this->checkProjectOwer($id) == false){
+			return ['error' => 'Access Forbidden'];
+		}
+		
 		return $this->service->findWhere(['owner_id' => \Authorizer::getResourceOwnerId()]);
 	}
 	
@@ -48,6 +53,11 @@ class ProjectController extends Controller
      * @return Respons
 	 */
 	public function store(Request $request){
+		
+		if ($this->checkProjectOwer($id) == false){
+			return ['error' => 'Access Forbidden'];
+		}
+		
 		return $this->service->create($request->all());
 	}
 	
@@ -92,10 +102,10 @@ class ProjectController extends Controller
 		//if($this->repository->isOwner($id, $userId) == false){
 		//	return ['success' => false];
 		//}
-		
+		/*
 		if ($this->checkProjectPermissions($id) == false){
 			return ['error' => 'Access Forbidden'];	
-		}
+		}*/
 		
 		return $this->service->show($id);
 	}
@@ -125,7 +135,7 @@ class ProjectController extends Controller
 		return $this->service->isMember($project_id);
 	}
 	
-	//Metodo para verificar a autorização
+	//Metodo para verificar a autorizaï¿½ï¿½o
 	private function checkProjectOwer($projectId){
 		//Pegar o id do user
 		$userId = \Authorizer::getResourceOwnerId();

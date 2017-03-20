@@ -50,7 +50,7 @@ class ProjectFileController extends Controller
 	public function store(Request $request){
 		//recebe o arquivo
 		$file = $request->file('file');
-		//pega a extensão
+		//pega a extensï¿½o
 		$extension = $file->getClientOriginalExtension();
 		
 		//carrega o array com os dados
@@ -69,97 +69,14 @@ class ProjectFileController extends Controller
 	
 	/**
 	 * 
-	 * @param Request $request
-	 * @param unknown $id
-	 * @return Response
+	 * @param Rquest $request
+	 * @param $project_id
+	 * @param $fileId
 	 */
-	public function update(Request $request, $id){
+	public function destroy(Rquest $request, $project_id, $fileId){
+		$data['fileId'] = $fileId;
+		$data['project_id'] = $project_id;
 		
-		if ($this->checkProjectOwer($id) == false){
-			return ['error' => 'Access Forbidden'];
-		}
-		
-		return $this->service->update($request->all(), $id);
-	}
-
-	/**
-	 * 
-	 * @param unknown $id
-	 * @return string|Exception
-	 */
-	public function destroy($id){
-		
-		if ($this->checkProjectOwer($id) == false){
-			return ['error' => 'Access Forbidden'];
-		}
-		
-		return $this->service->destroy($id);
-	}
-	
-	/**
-	 * 
-	 * @param unknown $id
-	 * @return unknown
-	 */
-	public function show($id){
-		//Pegar o id do user
-		//$userId = \Authorizer::getResourceOwnerId();
-		
-		//if($this->repository->isOwner($id, $userId) == false){
-		//	return ['success' => false];
-		//}
-		
-		if ($this->checkProjectPermissions($id) == false){
-			return ['error' => 'Access Forbidden'];	
-		}
-		
-		return $this->service->show($id);
-	}
-	
-	/**
-	 * 
-	 * @param unknown $project_id
-	 * @param unknown $user_id
-	 * @return unknown
-	 */
-	
-	public function storeMember($project_id, $user_id){
-		return $this->service->addMember($project_id, $user_id);
-	}
-	
-	/**
-	 * 
-	 * @param unknown $project_id
-	 * @param unknown $user_id
-	 * @return unknown
-	 */
-	public function destroyMember($project_id, $user_id){
-		return $this->service->removeMember($project_id, $user_id);
-	}
-	
-	public function members($project_id){
-		return $this->service->isMember($project_id);
-	}
-	
-	//Metodo para verificar a autorização
-	private function checkProjectOwer($projectId){
-		//Pegar o id do user
-		$userId = \Authorizer::getResourceOwnerId();
-		
-		return $this->repository->isOwner($projectId, $userId);
-	}
-	
-	private function checkProjectMember($projectId){
-		//Pegar o id do user
-		$userId = \Authorizer::getResourceOwnerId();
-	
-		return $this->repository->hasMember($projectId, $userId);
-	}
-	
-	private function checkProjectPermissions($projectId){
-		if($this->checkProjectOwer($projectId) or $this->checkProjectMember($projectId)){
-			return true;
-		}
-			return false;
+		return $this->service->deleteFile($data);
 	}
 }

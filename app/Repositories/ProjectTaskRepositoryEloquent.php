@@ -24,7 +24,13 @@ class ProjectTaskRepositoryEloquent extends BaseRepository implements ProjectTas
         return ProjectTask::class;
     }
 
-    
+    public function isOwner($projectId, $userId)
+    {
+    	if( count($this->findWhere(['id' => $projectId, 'owner_id' => $userId])) ){
+    		return true;
+    	}
+    	return false;
+    }
 
     /**
      * Boot up the repository, pushing criteria
