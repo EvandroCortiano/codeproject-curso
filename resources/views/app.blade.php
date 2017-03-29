@@ -1,17 +1,3 @@
-Skip to content
-Features Explore Pricing
-This repository
-Search
-Sign in or Sign up
-Watch 1  Star 0  Fork 52 marcus-campos/scafold
-forked from bestmomo/scafold
-Code  Pull requests 0  Projects 0  Pulse  Graphs
-Branch: master Find file Copy pathscafold/views/app.blade.php
-7fdd516  on 16 Sep 2015
-@bestmomo bestmomo Code cleaning and improvements
-1 contributor
-RawBlameHistory
-67 lines (59 sloc)  2.26 KB
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +5,13 @@ RawBlameHistory
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Laravel</title>
+
+@if(Config::get('app.debug'))
+	<link href="{{ asset('build/css/vendor/bootstrap.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('build/css/vendor/bootstrap-theme.min.css') }}" rel="stylesheet" />
+@else
+	<link href="{{  elixir('css/all.css') }}" rel="stylesheet" />
+@endif
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
@@ -31,6 +24,7 @@ RawBlameHistory
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -74,9 +68,17 @@ RawBlameHistory
 	@yield('content')
 
 	<!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+@if(Config::get('app.debug'))
+	<script src="{{ asset('build/js/vendor/jquery.min.js') }}"></script>
+	<script src="{{ asset('build/js/vendor/angular.min.js') }}"></script>
+	<script src="{{ asset('build/js/vendor/angular-route.min.js') }}"></script>
+	<script src="{{ asset('build/js/vendor/angular-resource.min.js') }}"></script>
+	<script src="{{ asset('build/js/vendor/angular-animate.min.js') }}"></script>
+	<script src="{{ asset('build/js/vendor/angular-messages.min.js') }}"></script>
+	<script src="{{ asset('build/js/vendor/ui-bootstrap.min.js') }}"></script>
+	<script src="{{ asset('build/js/vendor/navbar.min.js') }}"></script>
+@else
+	<script src="{{ elixir('js/all.js') }}"></script>
+@endif
 </body>
 </html>
-Contact GitHub API Training Shop Blog About
-© 2017 GitHub, Inc. Terms Privacy Security Status Help

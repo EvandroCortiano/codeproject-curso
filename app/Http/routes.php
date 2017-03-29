@@ -14,7 +14,7 @@ use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 */
 //Pagina inicial
 Route::get('/', function () {
-    return view('welcome');
+    return view('app');
 });
 
 //Acesso/token/login
