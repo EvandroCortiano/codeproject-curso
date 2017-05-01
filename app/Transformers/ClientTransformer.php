@@ -14,7 +14,7 @@ class ClientTransformer extends TransformerAbstract{
 			'responsible' => $client->responsible,
 			'email' => $client->email,
 			'phone' => $client->phone,
-			'adress' => $client->adress,
+			'address' => $client->address,
 			'obs' => $client->obs,
 		];
 	}

@@ -15,7 +15,7 @@ class Client extends Model implements Transformable{
 		'responsible',
 		'email',
 		'phone',
-		'adress',
+		'address',
 		'obs' 
 	];
 	

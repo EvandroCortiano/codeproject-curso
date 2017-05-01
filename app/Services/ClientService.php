@@ -66,7 +66,8 @@ class ClientService{
 	//Retorna todos os resultados
 	public function index(){
 		try {
-			return $this->repository->all();
+			$clients = $this->repository->all();
+			return $clients['data'];
 		} catch (Exception $e) {
 			return  $e;
 		}
@@ -76,7 +77,8 @@ class ClientService{
 	public function show($id){
 		try{
 			$client = $this->repository->find($id);
-			return $client . "<br/> Projet of this Client: <br/>" . $client->project;
+			return $client['data'];
+			//return $client . "<br/> Projet of this Client: <br/>" . $client->project;
 		} catch (Exception $e){
 			return $e;
 		}

@@ -496,7 +496,25 @@ var app = angular.module('app',['ngRoute','angular-oauth2','app.controllers']);
 
 angular.module('app.controllers', ['ngMessages','angular-oauth2']);
 
-app.config(['$routeProvider', 'OAuthProvider', function($routeProvider,OAuthProvider){
+app.provider('appConfig', function(){
+	var config = {
+			//para mudar a url da nossa api basta mudar o baseUrl
+			//e para chamar o serviço e outros lugares basta colocar o appConfig 
+			//e como provedor appConfigProvider
+			baseUrl: 'http://localhost:8080'
+	};
+	
+	return {
+		config: config,
+		//retornar o valor no serviço
+		$get: function(){
+			return config;
+		}
+	}
+});
+
+app.config(['$routeProvider', 'OAuthProvider', 'appConfigProvider',
+	function($routeProvider,OAuthProvider, appConfigProvider){
 	$routeProvider
 		.when('/login',{
 			templateUrl: 'build/views/login.html',
@@ -505,10 +523,14 @@ app.config(['$routeProvider', 'OAuthProvider', function($routeProvider,OAuthProv
 		.when('/home',{
 			templateUrl: 'build/views/home.html',
 			controller: 'HomeController'
+		})
+		.when('/clients',{
+			templateUrl: 'build/views/clients/list.html',
+			controller: 'ClientListController'
 		});
 	
 	    OAuthProvider.configure({
-	      baseUrl: 'http://localhost:8080',
+	      baseUrl: appConfigProvider.config.baseUrl,
 	      clientId: 'appid1',
 	      clientSecret: 'secret', // optional
 	      grantPath: 'oauth/access_token'
@@ -561,6 +583,11 @@ angular.module('app.controllers')
 			});
 		}
 	};
+	
+}]);
+angular.module('app.controllers')
+.controller('ClientListController', ['$scope', function($scope){
+	$scope.clients = [];
 	
 }]);
 //# sourceMappingURL=all.js.map
