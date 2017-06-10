@@ -44,7 +44,7 @@ Route::get('/', function () {
 			//Rotas para project - foi agrupada para porject e project notes pois tem o mesmo prefixo
 			Route::group(['prefix' => 'project'], function(){
 				//rotas project note
-				Route::get('{id}/note', 'ProjectNoteController@index');
+				Route::get('{id}/note', 'ProjectNoteController@index');	
 				Route::post('{id}/note', 'ProjectNoteController@store');
 				Route::get('{id}/note/{noteId}', 'ProjectNoteController@show');
 				Route::put('{id}/note/{noteId}', 'ProjectNoteController@update');

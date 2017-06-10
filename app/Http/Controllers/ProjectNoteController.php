@@ -48,8 +48,8 @@ class ProjectNoteController extends Controller
      * @param Request  $request
      * @return Respons
 	 */
-	public function store(Request $request){
-		return $this->service->create($request->all());
+	public function store(Request $request, $project_id){
+		return $this->service->create($request->all(), $project_id);
 	}
 	
 	/**
@@ -77,6 +77,7 @@ class ProjectNoteController extends Controller
 	 * @return unknown
 	 */
 	public function show($id, $noteId){
-		return $this->repository->findWhere(['project_id' => $id, 'id' => $noteId]);
+		$note = $this->repository->findWhere(['project_id' => $id, 'id' => $noteId]);
+		return $note[0];
 	}
 }

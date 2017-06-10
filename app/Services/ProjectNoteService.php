@@ -35,7 +35,7 @@ class ProjectNoteService{
 	public function create(array $data){
 		try {
 			$this->validators->with($data)->passesOrFail();
-			//poderia enviar um email, disparar notificação, postar um tweet
+			//poderia enviar um email, disparar notificaï¿½ï¿½o, postar um tweet
 			return $this->repository->create($data);
 		} catch (ValidatorException $e){
 			return [
@@ -76,7 +76,8 @@ class ProjectNoteService{
 	public function show($id){
 		try{
 			$project = $this->repository->find($id);
-			return $project . "<br/> Client of this project: <br/>" . $project->client;
+			return $project;
+// 			return $project . "<br/> Client of this project: <br/>" . $project->client;
 		} catch (Exception $e){
 			return $e;
 		}

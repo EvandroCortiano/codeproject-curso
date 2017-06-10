@@ -8,6 +8,7 @@ use CodeProject\Repositories\ProjectNoteRepository;
 use CodeProject\Entities\ProjectNote;
 use CodeProject\Validators\ProjectNoteValidator;
 
+
 /**
  * Class ProjectNoteRepositoryEloquent
  * @package namespace CodeProject\Repositories;
@@ -33,4 +34,5 @@ class ProjectNoteRepositoryEloquent extends BaseRepository implements ProjectNot
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
 }

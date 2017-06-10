@@ -41,7 +41,7 @@ class ClientService{
 		try {
 			$this->validators->with($data)->passesOrFail();
 			
-			$client = $this->repository->find($id);			
+			$client = $this->repository->skipPresenter()->find($id);			
 			$client->update($data);
 			
 			return $client;
@@ -56,7 +56,7 @@ class ClientService{
 	//Apaga Client selecionado
 	public function destroy($id){
 		try {
-			$this->repository->find($id)->delete();
+			$this->repository->skipPresenter()->find($id)->delete();
 			return "Deleted successfully!";
 		} catch (Exception $e){
 			return  $e;

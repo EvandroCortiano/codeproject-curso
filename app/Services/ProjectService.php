@@ -56,6 +56,41 @@ class ProjectService{
 			];
 		}
 	}
+	//cria um novo registro Angular
+	public function create(array $data, $project_id){
+		try {
+			$this->project_repository->skipPresenter()->find($project_id);
+			try {
+				$this->validator->with($data)->passesOrFail();
+				return $this->repository->create($data);
+			} catch (ValidatorException $e) {
+				return [
+						'success' => false,
+						'message' => $e->getMessageBag()
+				];
+			}
+		} catch (QueryException $e) {
+			return [
+					'success' => false,
+					'message' => $e->getMessage()
+			];
+		} catch (\Exception $e) {
+			return [
+					'success' => false,
+					'message' => $e->getMessage()
+			];
+		}
+		/*try {
+			$this->validators->with($data)->passesOrFail();
+			//poderia enviar um email, disparar notifica��o, postar um tweet
+			return $this->repository->create($data);
+		} catch (ValidatorException $e){
+			return [
+				'error' => true,
+				'message' => $e->getMessageBag()
+			];
+		}*/
+	}
 	
 	//atualiza dados
 	public function update(array $data, $id){
