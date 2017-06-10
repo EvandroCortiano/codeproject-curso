@@ -540,27 +540,27 @@ app.config(['$routeProvider', 'OAuthProvider', 'OAuthTokenProvider', 'appConfigP
 		.when('/clients/:id/remove',{
 			templateUrl: 'build/views/client/remove.html',
 			controller: 'ClientRemoveController'
+		})		
+		.when('/project/:id/notes/new',{
+			templateUrl: 'build/views/note/new.html',
+			controller: 'NoteNewController'
 		})
-		.when('/project/:id/note',{
+		.when('/project/:id/notes',{
 			templateUrl: 'build/views/note/list.html',
 			controller: 'NoteListController'
 		})
-		.when('/project/:id/note/:idnote',{
+		.when('/project/:id/notes/:idnote',{
 			templateUrl: 'build/views/note/view.html',
 			controller: 'NoteViewController'
 		})
-		.when('/project/:id/note/edit',{
+		.when('/project/:id/notes/:idnote/edit',{
 			templateUrl: 'build/views/note/edit.html',
 			controller: 'NoteEditController'
 		})
-		.when('/project/:id/note/remove',{
+		.when('/project/:id/notes/remove',{
 			templateUrl: 'build/views/note/remove.html',
 			controller: 'NoteRemoveController'
-		})
-		.when('/project/:id/note/new',{
-			templateUrl: 'build/views/note/new.html',
-			controller: 'NoteNewController'
-		})		;
+		});
 	
 	    OAuthProvider.configure({
 	      baseUrl: appConfigProvider.config.baseUrl,
@@ -594,23 +594,6 @@ app.run(['$rootScope', '$window', 'OAuth', function($rootScope, $window, OAuth) 
 	 // return $window.location.href = '/login?error_reason=' + rejection.data.error;
 	});
 }]);
-angular.module('app.services')
-.service('Client',['$resource','appConfig',function($resource, appConfig){
-	return $resource(appConfig.baseUrl + '/client/:id',
-			{id: '@id'},
-			{update: { method: 'PUT' }}
-			);
-}]);
-angular.module('app.services')
-	.service('ProjectNote',['$resource','appConfig',function($resource, appConfig){
-		return $resource(appConfig.baseUrl + '/project/:id/note/:idnote', 
-				{id: "@id", idnote: "@idnote"},
-				{
-					update: { method: 'PUT'},
-					save: { method: 'POST', url:appConfig.baseUrl + "/project/:id/note"} 
-				
-				});
-	}]);
 angular.module('app.controllers')
 .controller('HomeController', ['$scope', function($scope){
 
@@ -642,32 +625,23 @@ angular.module('app.controllers')
 	};
 	
 }]);
-angular.module('app.controllers')
-	.controller('NoteEditController', 
-				['$scope','$location','$routeParams','ProjectNote', 
-					function($scope,$location,$routeParams,ProjectNote){
-		$scope.note = ProjectNote.get({id: $routeParams.id, idnote: $routeParams.idnote});
-		
-		$scope.save = function(){
-			if($scope.form.$valid){
-				ProjectNote.update({id: $scope.note.project_id, idnote: $scope.note.id},$scope.note,function(){
-					$location.path('/project/' + $scope.note.project_id + '/notes');
+angular.module('app.services')
+.service('Client',['$resource','appConfig',function($resource, appConfig){
+	return $resource(appConfig.baseUrl + '/client/:id',
+			{id: '@id'},
+			{update: { method: 'PUT' }}
+			);
+}]);
+angular.module('app.services')
+	.service('ProjectNote',['$resource','appConfig',function($resource, appConfig){
+		return $resource(appConfig.baseUrl + '/project/:id/note/:idnote', 
+				{id: "@id", idnote: "@idnote"},
+				{
+					update: { method: 'PUT'},
+					save: { method: 'POST', url:appConfig.baseUrl + "/project/:id/notes"} 
+				
 				});
-			}
-		}
-		
 	}]);
-angular.module('app.controllers')
-	.controller('NoteListController', ['$scope', '$routeParams', 'ProjectNote', function($scope, $routeParams, ProjectNote){
-		$scope.notes = ProjectNote.query({id: $routeParams.id});
-	}]);
-
-
-angular.module('app.controllers')
-	.controller('NoteViewController', ['$scope', '$routeParams', 'ProjectNote', function($scope, $routeParams, ProjectNote){
-		$scope.notes = ProjectNote.query({id: $routeParams.id}, {idnote: $routeParams.idnote});
-	}]);
-
 angular.module('app.controllers')
 	.controller('ClientEditController', 
 				['$scope','$location','$routeParams','Client', 
@@ -713,4 +687,54 @@ angular.module('app.controllers')
             });
         }
     }]);
+angular.module('app.controllers')
+	.controller('NoteEditController', 
+				['$scope','$location','$routeParams','ProjectNote', 
+					function($scope,$location,$routeParams,ProjectNote){
+		$scope.note = ProjectNote.get({id: $routeParams.id, idnote: $routeParams.idnote});
+		
+		$scope.save = function(){
+			if($scope.form.$valid){
+				ProjectNote.update({id: $scope.note.project_id, idnote: $scope.note.id},$scope.note,function(){
+					$location.path('/project/' + $scope.note.project_id + '/notes/' + $scope.note.id);
+				});
+			}
+		}
+		
+	}]);
+angular.module('app.controllers')
+	.controller('NoteListController', ['$scope', '$routeParams', 'ProjectNote', function($scope, $routeParams, ProjectNote){
+		$scope.note = ProjectNote.query({id: $routeParams.id, noteId: $routeParams.noteId});
+	}]);
+angular.module('app.controllers')
+	.controller('NoteNewController', 
+				['$scope','$location' ,'ProjectNote', '$routeParams', function($scope,$location,ProjectNote,$routeParams){
+		$scope.notes = new ProjectNote();
+		$scope.note.project_id = $routeParams.id;
+		
+		$scope.save = function(){
+			if($scope.form.$valid){
+				$scope.notes.$save().then(function(){
+					$location.path('/project/' + $scope.note.project_id + '/notes/new');
+				});
+			}
+		}
+		
+	}]);
+angular.module('app.controllers')
+    .controller('NoteRemoveController',
+    ['$scope', '$location','$routeParams', 'ProjectNote', function($scope, $location, $routeParams, ProjectNote){
+        $scope.note = ProjectNote.get({id: $routeParams.id, idnote: $routeParams.idnote});
+
+        $scope.remove = function() {
+            $scope.note.$delete({id: $scope.note.project_id, idnote: $scope.note.id}).then(function(){
+                $location.path('/project/' + $routeParams.id + '/notes');
+            });
+        }
+    }]);
+angular.module('app.controllers')
+	.controller('NoteViewController', ['$scope', '$routeParams', 'ProjectNote', function($scope, $routeParams, ProjectNote){
+		$scope.notes = ProjectNote.query({id: $routeParams.id}, {idnote: $routeParams.idnote});
+	}]);
+
 //# sourceMappingURL=all.js.map
