@@ -48,7 +48,7 @@ Route::get('/', function () {
 				Route::post('{id}/note', 'ProjectNoteController@store');
 				Route::get('{id}/note/{noteId}', 'ProjectNoteController@show');
 				Route::put('{id}/note/{noteId}', 'ProjectNoteController@update');
-				Route::delete('{id}/note/{noteId}', 'ProjectNoteController@destroy');
+				Route::delete('note/{noteId}', 'ProjectNoteController@destroy');
 			});
 
 				/* rotas project
@@ -73,4 +73,6 @@ Route::get('/', function () {
 
 				//rota upload
 				Route::post('project/{id}/file','ProjectFileController@store');
+				
+				Route::get('user/authenticated', 'UserController@authenticated');
 		});

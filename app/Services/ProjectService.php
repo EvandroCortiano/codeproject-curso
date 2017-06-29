@@ -37,25 +37,12 @@ class ProjectService{
 	//Retorna todos os resultados
 	public function index(){
 		try {
-			return $this->repository->all();
+			return $this->repository->skipPresenter()->all();
 		} catch (Exception $e) {
 			return  $e;
 		}
 	}
 	
-	//cria um novo registro
-	public function create(array $data){
-		try {
-			$this->validators->with($data)->passesOrFail();
-			//poderia enviar um email, disparar notifica��o, postar um tweet
-			return $this->repository->create($data);
-		} catch (ValidatorException $e){
-			return [
-				'error' => true,
-				'message' => $e->getMessageBag()
-			];
-		}
-	}
 	//cria um novo registro Angular
 	public function create(array $data, $project_id){
 		try {

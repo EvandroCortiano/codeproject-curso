@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Access\Response;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Services\ProjectService;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 
 class ProjectController extends Controller
@@ -40,11 +41,12 @@ class ProjectController extends Controller
 	 */
 	public function index(){
 		
-		if ($this->checkProjectOwer($id) == false){
-			return ['error' => 'Access Forbidden'];
-		}
+// 		if ($this->checkProjectOwer($id) == false){
+// 			return ['error' => 'Access Forbidden'];
+// 		}
 		
-		return $this->service->findWhere(['owner_id' => \Authorizer::getResourceOwnerId()]);
+// 		return $this->service->findWhere(['owner_id' => Authorizer::getResourceOwnerId()]);
+		return $this->service->index();
 	}
 	
 	/**

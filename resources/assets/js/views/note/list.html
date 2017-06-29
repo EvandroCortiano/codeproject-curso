@@ -19,10 +19,10 @@
 							<tr ng-repeat="o in note">
 								<td>{{o.project_id}}</td>
 								<td>{{o.title}}</td>
-								<td>{{o.note}}</td>
+								<td>{{o.note | limitTo: 30}}...</td>
 								<td>
 									<a ng-href="#/project/{{o.project_id}}/notes/{{o.id}}/edit">Editar</a> | 
-									<a ng-href="#/project/{{o.project_id}}/notes/remove">Excluir</a> |
+									<a ng-href="#/project/{{o.project_id}}/notes/{{o.id}}/remove">Excluir</a> |
 									<a ng-href="#/project/{{o.project_id}}/notes/new">New Note</a>
 								</td>
 							</tr>

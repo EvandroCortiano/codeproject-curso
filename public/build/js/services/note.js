@@ -3,8 +3,8 @@ angular.module('app.services')
 		return $resource(appConfig.baseUrl + '/project/:id/note/:idnote', 
 				{id: "@id", idnote: "@idnote"},
 				{
-					update: { method: 'PUT'},
-					save: { method: 'POST', url:appConfig.baseUrl + "/project/:id/notes"} 
+					update: { method: 'PUT' },
+					get: { method: 'GET' }
 				
 				});
 	}]);

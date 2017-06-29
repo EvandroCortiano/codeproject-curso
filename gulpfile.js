@@ -65,6 +65,9 @@ gulp.task('copy-scripts', function(){
 
 //copia e tarefa para copiar os htmls
 config.build_path_html = config.build_path + '/views';
+config.build_path_font = config.build_path + '/fonts';
+config.build_path_image = config.build_path + '/images';
+
 gulp.task('copy-html', function(){
     //copia os html
     gulp.src([
@@ -74,6 +77,24 @@ gulp.task('copy-html', function(){
    	 .pipe(liveReload());
 });
 
+gulp.task('copy-font', function(){
+	//copia os html
+	gulp.src([
+		config.assets_path + '/fonts/**/*'
+		])
+		.pipe(gulp.dest(config.build_path_font))
+		.pipe(liveReload());
+});
+
+gulp.task('copy-image', function(){
+	//copia os html
+	gulp.src([
+		config.assets_path + '/images/**/*'
+		])
+		.pipe(gulp.dest(config.build_path_image))
+		.pipe(liveReload());
+});
+
 //tarefa para limpar as pastas
 gulp.task('clear-build-folder', function(){
 	clean.sync(config.build_path);	
@@ -81,7 +102,7 @@ gulp.task('clear-build-folder', function(){
 
 //tarefa para criar arquivos para ambiente de produção
 gulp.task('default',['clear-build-folder'],function(){
-	gulp.start('copy-html');
+	gulp.start('copy-html','copy-font','copy-image');
 	elixir(function(mix){
 		mix.styles(config.vendor_path_css.concat([config.assets_path + '/css/**/*.css']),
 				'public/css/all.css', config.assets_path);
@@ -100,7 +121,7 @@ gulp.task('watch-dev',['clear-build-folder'],function(){
 	//fica escutando todos que lhe chamar
 	liveReload.listen();
 	//inicia a tarefa
-	gulp.start('copy-styles', 'copy-scripts', 'copy-html');
+	gulp.start('copy-styles', 'copy-scripts', 'copy-html','copy-font','copy-image');
 	//verifica se houve alguma modificação se houver executa a tarefa
 	gulp.watch(config.assets_path + '/**',['copy-styles', 'copy-scripts', 'copy-html'])
 });

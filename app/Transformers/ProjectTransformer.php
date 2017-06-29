@@ -37,7 +37,7 @@ class ProjectTransformer extends TransformerAbstract{
 	
 	public function includeFiles(Project $project)
 	{
-		return $this->collection($project->files, new ProjectFileTransformer());
+	//	return $this->collection($project->files, new ProjectFileTransformer());
 	}
 	
 	public function includeClients(Project $project)
